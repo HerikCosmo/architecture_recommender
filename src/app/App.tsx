@@ -1,10 +1,21 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import { Navigation } from "./components/Navigation"
+import { MainPage } from "./pages/MainPage"
+import { AttributesPage } from "./pages/AttributesPage"
+import { ArchitecturesPage } from "./pages/ArchitecturesPage"
+
 function App() {
   return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-red-600 shadow-lg p-6 bg-white rounded-2xl">
-        Hello World
-      </h1>
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/attributes" element={<AttributesPage />} />
+          <Route path="/architectures" element={<ArchitecturesPage />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
 
