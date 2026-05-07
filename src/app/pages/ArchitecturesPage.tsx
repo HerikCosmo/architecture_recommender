@@ -1,3 +1,3 @@
 export function ArchitecturesPage() {
-    return <h1>Architectures Page</h1>
+  return <h1>Architectures Page</h1>
 }
