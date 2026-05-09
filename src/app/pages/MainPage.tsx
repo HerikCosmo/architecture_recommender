@@ -1,16 +1,43 @@
 import { useState } from "react";
 import { AttributeCard } from "../components/AttributeCard";
 import { priorityLevels, mockQualityAttributes as qualityAttributes } from "../data/attributes";
+import { mockArchitectures as architectures } from "../data/architectures";
 import { Calculator, Target } from "lucide-react";
+import { ArchictectureResult } from "../components/ArchitectureResult";
 
 export function MainPage() {
   const [priorities, setPriorities] = useState<Record<string, number>>(
     Object.fromEntries(qualityAttributes.map(attr => [attr.id, 0]))
   );
 
-  const [showResults, setShowResults] = useState(false);
+  const [showResults, setShowResults] = useState(true);
 
   const hasSelectedPriorities = Object.values(priorities).some(p => p > 0);
+
+  const calculateScores = () => {
+    return architectures
+      .filter(arch => {
+        const hasConflict = Object.entries(priorities).some(([attrId, priority]) => {
+          const attrScore = arch.attributeScores[attrId as keyof typeof arch.attributeScores];
+          return priority === 5 && attrScore === 0;
+        })
+
+        return !hasConflict;
+      })
+      .map(arch => {
+        let score = 0;
+        Object.entries(priorities).forEach(([attrId, priority]) => {
+          const attrScore = arch.attributeScores[attrId as keyof typeof arch.attributeScores];
+          score += priority * attrScore; // w_i * a_i
+        });
+        return { architecture: arch, score }
+      })
+      .sort((a, b) => b.score - a.score);
+  };
+
+  const results = calculateScores();
+
+  const maxScore = Math.max(...results.map(r => r.score), 1);
 
   const handlePriorityChange = (attributeId: string, value: number) => {
     setPriorities(prev => ({
@@ -85,6 +112,37 @@ export function MainPage() {
             </p>
           )}
         </div>
+        </>
+      )}
+
+      {showResults && (
+        <>
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-800 mb-3">
+              Ranking de Arquiteturas
+            </h1>
+            <p className="text-gray-600 max-w-2xl mx-auto mb-4">
+              Baseado nas prioridades selecionadas, estas são as arquiteturas mais compatíveis
+            </p>
+            <button
+              onClick={() => setShowResults(false)}
+              className="text-blue-600 hover:text-blue-800 font-medium"
+            >
+              Voltar para seleção
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            {results.map((result, index) => (
+              <ArchictectureResult
+                key={result.architecture.id}
+                architecture={result.architecture}
+                score={result.score}
+                maxScore={maxScore}
+                rank={index + 1}
+              />
+            ))}
+          </div>
         </>
       )}
     </div>
