@@ -1,18 +1,46 @@
-import type { Architecture } from "../data/architectures";
+import type { ArchitecturePattern } from "../data/architectures";
 import type { QualityAttribute } from "../data/attributes";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../config/firebase";
 
-const API_URL = ""
+export async function getAttributes(): Promise<QualityAttribute[]> {
+  const attributesRef = collection(db, "attributes");
+  const snapshot = await getDocs(attributesRef);
 
-export async function fetchAttributes(): Promise<QualityAttribute[]> {
-  const response = await fetch(`${API_URL}/attributes`)
-  if(!response) throw new Error("Erro ao buscar atributos")
+  const attributesList = snapshot.docs.map(doc => {
+    const data = doc.data();
 
-  return await response.json()
+    return {
+      id: doc.id,
+      name: data.name,
+      description: data.description,
+      examples: data.examples,
+      relatedFeatures: data.examples
+    }  as QualityAttribute;
+  });
+
+  return attributesList;
 }
 
-export async function fetchArchitectures(): Promise<Architecture[]> {
-  const response = await fetch(`${API_URL}/architectures`)
-  if(!response) throw new Error("Erro ao buscar arquiteturas")
+export async function getArchitecturePatterns(): Promise<ArchitecturePattern[]> {
+  const patternsRef = collection(db, "architecturePatterns")
+  const snapshot = await getDocs(patternsRef);
 
-  return await response.json()
+  const patternsList = snapshot.docs.map(doc => {
+    const data = doc.data();
+
+    return {
+      id: doc.id,
+      name: data.name,
+      code: data.code,
+      description: data.description,
+      examples: data.examples,
+      pros: data.pros,
+      cons: data.cons,
+      imageURL: data.imageURL || "",
+      attributeScores: data.attributeScores
+    } as ArchitecturePattern
+  });
+
+  return patternsList;
 }

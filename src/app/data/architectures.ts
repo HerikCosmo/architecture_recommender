@@ -1,4 +1,4 @@
-export interface Architecture {
+export interface ArchitecturePattern {
     id: string;
     code: string;
     name: string;
@@ -6,6 +6,7 @@ export interface Architecture {
     examples: string[];
     pros: string[];
     cons: string[];
+    imageURL?: string;
     attributeScores: {
         performance: number;
         reusability: number;
@@ -18,7 +19,7 @@ export interface Architecture {
     }
 }
 
-export const mockArchitectures: Architecture[] = [
+export const mockArchitectures: ArchitecturePattern[] = [
   {
     id: 'layered',
     code: 'LAY',

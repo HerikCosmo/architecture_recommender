@@ -1,8 +1,25 @@
 import { BookOpen } from "lucide-react";
-import { mockQualityAttributes as qualityAttributes } from "../data/attributes";
+import type { QualityAttribute } from "../data/attributes";
 import { AttributeInfo } from "../components/AttributeInfo";
+import { useEffect, useState } from "react";
+import { getAttributes } from "../services/api";
 
 export function AttributesPage() {
+  const [attributes, setAttributes] = useState<QualityAttribute[]>([]);
+
+  useEffect(() => {
+    const fetchAttributes = async() => {
+      try {
+        const data = await getAttributes();
+        setAttributes(data);
+      } catch(err) {
+        console.error("Erro ao buscar atributos: ", err);
+      }
+    }
+
+    fetchAttributes();
+  }, [])
+
   return (
     <div className="max-w 6-xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
@@ -18,7 +35,7 @@ export function AttributesPage() {
       </div>
 
       <div className="space-y-6">
-        {qualityAttributes.map((attribute, index) => (
+        {attributes.map((attribute, index) => (
           <AttributeInfo key={attribute.id} attribute={attribute} index={index} />
         ))}
       </div>

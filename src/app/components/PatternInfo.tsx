@@ -1,9 +1,9 @@
 import { Image, Lightbulb, ThumbsDown, ThumbsUp } from "lucide-react";
-import type { Architecture } from "../data/architectures"
+import type { ArchitecturePattern } from "../data/architectures"
 import { useState } from "react";
 
 interface PatternInfoProps {
-  arch: Architecture
+  arch: ArchitecturePattern
 }
 
 export function PatternInfo({
@@ -101,13 +101,13 @@ export function PatternInfo({
                   {Object.entries(arch.attributeScores).map(([attr, score]) => {
                     const attrNames: Record<string, string> = {
                       performance: 'Desempenho',
-                    reusability: 'Reusabilidade',
-                    security: 'Segurança',
-                    testability: 'Testabilidade',
-                    modifiability: 'Modificabilidade',
-                    reliability: 'Confiabilidade',
-                    availability: 'Disponibilidade',
-                    scalability: 'Escalabilidade'
+                      reusability: 'Reusabilidade',
+                      security: 'Segurança',
+                      testability: 'Testabilidade',
+                      modifiability: 'Modificabilidade',
+                      reliability: 'Confiabilidade',
+                      availability: 'Disponibilidade',
+                      scalability: 'Escalabilidade'
                     };
 
                     return (

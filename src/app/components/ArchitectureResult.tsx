@@ -1,9 +1,9 @@
 import { useState } from "react";
-import type { Architecture } from "../data/architectures";
+import type { ArchitecturePattern } from "../data/architectures";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface ArchitectureResultProps {
-  architecture: Architecture;
+  architecture: ArchitecturePattern;
   score: number;
   maxScore: number;
   rank: number;

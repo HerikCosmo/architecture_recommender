@@ -1,8 +1,25 @@
 import { Boxes } from "lucide-react";
-import { mockArchitectures as architectures } from "../data/architectures";
+import type { ArchitecturePattern } from "../data/architectures";
 import { PatternInfo } from "../components/PatternInfo";
+import { useEffect, useState } from "react";
+import { getArchitecturePatterns } from "../services/api";
 
 export function PatternsPage() {
+  const [patterns, setPatterns] = useState<ArchitecturePattern[]>([])
+
+  useEffect(() => {
+    const fetchPatterns = async() => {
+      try {
+        const data = await getArchitecturePatterns();
+        setPatterns(data);
+      } catch(err) {
+        console.error("Erro ao buscar atributos: ", err);
+      }
+    }
+
+    fetchPatterns();
+  }, []);
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
@@ -16,7 +33,7 @@ export function PatternsPage() {
       </div>
 
       <div className="grid md:grid-cols-2 gap-6">
-        {architectures.map((arch) => (
+        {patterns.map((arch) => (
           <PatternInfo key={arch.id} arch={arch} />
         ))}
       </div>
