@@ -1,21 +1,47 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AttributeCard } from "../components/AttributeCard";
-import { priorityLevels, mockQualityAttributes as qualityAttributes } from "../data/attributes";
-import { mockArchitectures as architectures } from "../data/architectures";
+import { priorityLevels, type QualityAttribute } from "../data/attributes";
+import { type ArchitecturePattern } from "../data/architectures";
 import { Calculator, Target } from "lucide-react";
 import { ArchictectureResult } from "../components/ArchitectureResult";
+import { getArchitecturePatterns, getAttributes } from "../services/api";
 
 export function MainPage() {
-  const [priorities, setPriorities] = useState<Record<string, number>>(
-    Object.fromEntries(qualityAttributes.map(attr => [attr.id, 0]))
-  );
+  const [attributes, setAttributes] = useState<QualityAttribute[]>([]);
+  const [patterns, setPatterns] = useState<ArchitecturePattern[]>([]);
+
+  const [priorities, setPriorities] = useState<Record<string, number>>({});
 
   const [showResults, setShowResults] = useState(true);
+
+  useEffect(() => {
+    const fetchAllData = async() => {
+      try {
+        const [fetchPatterns, fetchAttributes] = await Promise.all([
+          getArchitecturePatterns(),
+          getAttributes()
+        ]);
+
+        setPatterns(fetchPatterns);
+        setAttributes(fetchAttributes);
+
+        const initialPriorities = Object.fromEntries(
+          attributes.map(attr => [attr.id, 0])
+        );
+
+        setPriorities(initialPriorities);
+      } catch(err) {
+        console.error("Erro ao carregar dados: ", err);
+      }
+    }
+
+    fetchAllData();
+  }, []);
 
   const hasSelectedPriorities = Object.values(priorities).some(p => p > 0);
 
   const calculateScores = () => {
-    return architectures
+    return patterns
       .filter(arch => {
         const hasConflict = Object.entries(priorities).some(([attrId, priority]) => {
           const attrScore = arch.attributeScores[attrId as keyof typeof arch.attributeScores];
@@ -82,7 +108,7 @@ export function MainPage() {
             Atributos de Qualidade
           </h2>
           <div className="space-y-4">
-            {qualityAttributes.map(attribute => (
+            {attributes.map(attribute => (
               <AttributeCard
                 key={attribute.id}
                 attribute={attribute}

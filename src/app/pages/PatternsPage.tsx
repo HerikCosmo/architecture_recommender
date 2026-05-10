@@ -13,7 +13,7 @@ export function PatternsPage() {
         const data = await getArchitecturePatterns();
         setPatterns(data);
       } catch(err) {
-        console.error("Erro ao buscar atributos: ", err);
+        console.error("Erro ao buscar padrões de arquitetura: ", err);
       }
     }
 
