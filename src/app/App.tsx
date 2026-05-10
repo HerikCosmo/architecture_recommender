@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Navigation } from "./components/Navigation"
 import { MainPage } from "./pages/MainPage"
 import { AttributesPage } from "./pages/AttributesPage"
-import { ArchitecturesPage } from "./pages/ArchitecturesPage"
+import { PatternsPage } from "./pages/PatternsPage"
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/attributes" element={<AttributesPage />} />
-          <Route path="/architectures" element={<ArchitecturesPage />} />
+          <Route path="/patterns" element={<PatternsPage />} />
         </Routes>
       </div>
     </BrowserRouter>
