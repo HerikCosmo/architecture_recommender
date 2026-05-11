@@ -12,7 +12,7 @@ export function MainPage() {
 
   const [priorities, setPriorities] = useState<Record<string, number>>({});
 
-  const [showResults, setShowResults] = useState(true);
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     const fetchAllData = async() => {
@@ -26,7 +26,7 @@ export function MainPage() {
         setAttributes(fetchAttributes);
 
         const initialPriorities = Object.fromEntries(
-          attributes.map(attr => [attr.id, 0])
+          fetchAttributes.map(attr => [attr.id, 0])
         );
 
         setPriorities(initialPriorities);
