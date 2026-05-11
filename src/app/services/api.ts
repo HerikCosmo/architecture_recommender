@@ -15,7 +15,7 @@ export async function getAttributes(): Promise<QualityAttribute[]> {
       name: data.name,
       description: data.description,
       examples: data.examples,
-      relatedFeatures: data.examples
+      relatedFeatures: data.relatedFeatures
     }  as QualityAttribute;
   });
 
