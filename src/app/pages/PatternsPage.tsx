@@ -3,8 +3,10 @@ import type { ArchitecturePattern } from "../data/architectures";
 import { PatternInfo } from "../components/PatternInfo";
 import { useEffect, useState } from "react";
 import { getArchitecturePatterns } from "../services/api";
+import { Loading } from "../components/Loading";
 
 export function PatternsPage() {
+  const [isLoading, setIsLoading] = useState(true)
   const [patterns, setPatterns] = useState<ArchitecturePattern[]>([])
 
   useEffect(() => {
@@ -14,11 +16,17 @@ export function PatternsPage() {
         setPatterns(data);
       } catch(err) {
         console.error("Erro ao buscar padrões de arquitetura: ", err);
+      } finally {
+        setIsLoading(false);
       }
     }
 
     fetchPatterns();
   }, []);
+
+  if(isLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">

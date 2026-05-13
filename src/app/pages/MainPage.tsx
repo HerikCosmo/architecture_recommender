@@ -5,8 +5,10 @@ import { type ArchitecturePattern } from "../data/architectures";
 import { Calculator, Target } from "lucide-react";
 import { ArchictectureResult } from "../components/ArchitectureResult";
 import { getArchitecturePatterns, getAttributes } from "../services/api";
+import { Loading } from "../components/Loading";
 
 export function MainPage() {
+  const [isLoading, setIsLoading] = useState(true)
   const [attributes, setAttributes] = useState<QualityAttribute[]>([]);
   const [patterns, setPatterns] = useState<ArchitecturePattern[]>([]);
 
@@ -32,6 +34,8 @@ export function MainPage() {
         setPriorities(initialPriorities);
       } catch(err) {
         console.error("Erro ao carregar dados: ", err);
+      } finally {
+        setIsLoading(false)
       }
     }
 
@@ -71,6 +75,10 @@ export function MainPage() {
       [attributeId]: value
     }));
   };
+
+  if(isLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -121,7 +129,13 @@ export function MainPage() {
 
         <div className="text-center">
           <button
-            onClick={() => setShowResults(true)}
+            onClick={() => {
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+              });
+              setShowResults(true)
+            }}
             disabled={!hasSelectedPriorities}
             className={`inline-flex items-center gap-2 px-8 py-4 rounded-lg font-semibold text-lg transition-all ${
               hasSelectedPriorities

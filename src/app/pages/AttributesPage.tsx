@@ -3,8 +3,10 @@ import type { QualityAttribute } from "../data/attributes";
 import { AttributeInfo } from "../components/AttributeInfo";
 import { useEffect, useState } from "react";
 import { getAttributes } from "../services/api";
+import { Loading } from "../components/Loading";
 
 export function AttributesPage() {
+  const [isLoading, setIsLoading] = useState(true)
   const [attributes, setAttributes] = useState<QualityAttribute[]>([]);
 
   useEffect(() => {
@@ -14,11 +16,17 @@ export function AttributesPage() {
         setAttributes(data);
       } catch(err) {
         console.error("Erro ao buscar atributos: ", err);
+      } finally {
+        setIsLoading(false);
       }
     }
 
     fetchAttributes();
   }, [])
+
+  if(isLoading) {
+    return <Loading />
+  }
 
   return (
     <div className="max-w 6-xl mx-auto px-4 py-8">
