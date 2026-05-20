@@ -1,9 +1,9 @@
 import type { ArchitecturePattern } from "../data/architectures";
 import type { QualityAttribute } from "../data/attributes";
-import { db as aw, DATABASE_ID } from "../config/appwrite";
+import { db, DATABASE_ID } from "../config/appwrite";
 
 export async function getAttributes(): Promise<QualityAttribute[]> {
-  const response = await aw.listRows({
+  const response = await db.listRows({
     databaseId: DATABASE_ID,
     tableId: 'attributes'
   })
@@ -22,7 +22,7 @@ export async function getAttributes(): Promise<QualityAttribute[]> {
 }
 
 export async function getArchitecturePatterns(): Promise<ArchitecturePattern[]> {
-  const response = await aw.listRows({
+  const response = await db.listRows({
     databaseId: DATABASE_ID,
     tableId: 'architecturePatterns'
   });
