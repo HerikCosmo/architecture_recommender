@@ -1,44 +1,43 @@
 import type { ArchitecturePattern } from "../data/architectures";
 import type { QualityAttribute } from "../data/attributes";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../config/firebase";
+import { db as aw, DATABASE_ID } from "../config/appwrite";
 
 export async function getAttributes(): Promise<QualityAttribute[]> {
-  const attributesRef = collection(db, "attributes");
-  const snapshot = await getDocs(attributesRef);
+  const response = await aw.listRows({
+    databaseId: DATABASE_ID,
+    tableId: 'attributes'
+  })
 
-  const attributesList = snapshot.docs.map(doc => {
-    const data = doc.data();
-
+  const attributesList = response.rows.map(row => {
     return {
-      id: doc.id,
-      name: data.name,
-      description: data.description,
-      examples: data.examples,
-      relatedFeatures: data.relatedFeatures
-    }  as QualityAttribute;
+      id: row.id,
+      name: row.name,
+      description: row.description,
+      examples: row.examples,
+      relatedFeatures: row.relatedFeatures
+    } as QualityAttribute;
   });
 
   return attributesList;
 }
 
 export async function getArchitecturePatterns(): Promise<ArchitecturePattern[]> {
-  const patternsRef = collection(db, "architecturePatterns")
-  const snapshot = await getDocs(patternsRef);
+  const response = await aw.listRows({
+    databaseId: DATABASE_ID,
+    tableId: 'architecturePatterns'
+  });
 
-  const patternsList = snapshot.docs.map(doc => {
-    const data = doc.data();
-
-    return {
-      id: doc.id,
-      name: data.name,
-      code: data.code,
-      description: data.description,
-      examples: data.examples,
-      pros: data.pros,
-      cons: data.cons,
-      imageURL: data.imageURL || "",
-      attributeScores: data.attributeScores
+  const patternsList = response.rows.map(row => {
+     return {
+      id: row.$id,
+      name: row.name,
+      code: row.code,
+      description: row.description,
+      examples: row.examples,
+      pros: row.pros,
+      cons: row.cons,
+      imageURL: row.imageURL || "",
+      attributeScores: JSON.parse(row.attributeScores)
     } as ArchitecturePattern
   });
 
