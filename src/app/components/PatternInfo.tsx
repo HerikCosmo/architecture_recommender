@@ -34,13 +34,27 @@ export function PatternInfo({
             <p className="text-gray-700 leading-relaxed">{arch.description}</p>
           </div>
 
-          <div className="mb-bg-gray-100 rounded-lg p-8 flex flex-col items center justify-center border-2 border-dashed border-gray-300">
-            <Image className="text-gray-400 mb-2" scale={48} />
-            <p className="text-gray-500 text-sm">Diagrama: {arch.name}</p>
-            <p className="text-gray-400 text-xs mt-1">
-              [Image de referência da arquitetura {arch.code}]
-            </p>
+          {arch.imageURL ? (
+            <figure className="flex flex-col items-center my-2">
+              <img
+                src={arch.imageURL}
+                alt={`Diagrama da arquitetura ${arch.name}`}
+                className="w-full max-h-80 object-contain rounded-lg border border-gray-200 shadow-sm bg-white"
+              />
+
+              <figcaption className="mt-2 text-xs text-gray-400 text-center italic">
+                Fonte: Referência da arquitetura {arch.name}
+              </figcaption>
+            </figure>
+          ) : (
+            <div className="mb-bg-gray-100 rounded-lg p-8 flex flex-col items center justify-center border-2 border-dashed border-gray-300">
+              <Image className="text-gray-400 mb-2" scale={48} />
+              <p className="text-gray-500 text-sm">Diagrama: {arch.name}</p>
+              <p className="text-gray-400 text-xs mt-1">
+                [Image de referência da arquitetura {arch.code}]
+              </p>
           </div>
+          )}
 
           {isExpanded && (
             <div className="space-y-4 border-t pt-4">
