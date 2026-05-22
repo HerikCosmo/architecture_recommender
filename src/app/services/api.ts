@@ -37,6 +37,7 @@ export async function getArchitecturePatterns(): Promise<ArchitecturePattern[]> 
       pros: row.pros,
       cons: row.cons,
       imageURL: row.imageURL || "",
+      imageSource: row.imageSource || "não encontrado",
       attributeScores: JSON.parse(row.attributeScores)
     } as ArchitecturePattern
   });

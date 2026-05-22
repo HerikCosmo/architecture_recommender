@@ -43,7 +43,7 @@ export function PatternInfo({
               />
 
               <figcaption className="mt-2 text-xs text-gray-400 text-center italic">
-                Fonte: Referência da arquitetura {arch.name}
+                Fonte: {arch.imageSource}
               </figcaption>
             </figure>
           ) : (

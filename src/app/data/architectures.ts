@@ -7,6 +7,7 @@ export interface ArchitecturePattern {
     pros: string[];
     cons: string[];
     imageURL?: string;
+    imageSource?: string;
     attributeScores: {
         performance: number;
         reusability: number;
