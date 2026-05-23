@@ -1,73 +1,57 @@
-# React + TypeScript + Vite
+# Architecture Recommender
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O Architecture Recommender é uma aplicação web que permite analisar e conferir padrões de arquiteturas de software. O sistema avalia o grau de inferência que os padrões têm com diversos atributos de qualidade de software.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Funcionalidades
 
-## React Compiler
+O sistema é divido em 3 seções:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Página Principal (`/`)**: Ferramenta central de recomendação.
+- **Atributos (`/attributes`)**: Exploração detalhada dos atributos de qualidade de software.
+- **Padrões (`/patterns`)**: Catálogo dos padrões arquiteturais, apresentando a sua descrição, prós, contras e exemplos.
 
-## Expanding the ESLint configuration
+## 🛠️ Tecnologias Utilizadas
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Este projeto foi construído com as seguintes tecnologias:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **React** (com **TypeScript**) para a construção da interface.
+- **Tailwind CSS/Lucide React** para a estilização, uso de ícones e design responsivo.
+- **Appwrite** para integração com serviços de *backend*.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🚀 Como executar o projeto
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Utilizando [Node.js](https://nodejs.org/), siga os passos:
+
+1. Clone o repositório.
+2. Navegue até à pasta do projeto:
+```bash
+cd architecture_recommender
+
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+3. Instale as dependências do projeto:
+```bash
+npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+
+4. Preencha as variáveis de ambiente em um arquivo **.env**
+```
+VITE_APPWRITE_PROJECT_ID=
+VITE_APPWRITE_PROJECT_NAME=
+VITE_APPWRITE_ENDPOINT=
+VITE_DATABASE_ID=
+```
+
+
+5. Inicie o servidor de desenvolvimento:
+```bash
+npm run dev
+
+```
+
+
+6. Acesso no navegador `http://localhost:5173` para ver a aplicação em funcionamento.
