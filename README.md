@@ -6,7 +6,7 @@ O Architecture Recommender é uma aplicação web que permite analisar e conferi
 
 ## Funcionalidades
 
-O sistema é divido em 3 seções:
+O sistema é dividido em 3 seções:
 
 - **Página Principal (`/`)**: Ferramenta central de recomendação.
 - **Atributos (`/attributes`)**: Exploração detalhada dos atributos de qualidade de software.
