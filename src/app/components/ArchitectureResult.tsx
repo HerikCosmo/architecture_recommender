@@ -44,9 +44,6 @@ export function ArchictectureResult({
               </div>
               <span className="text-sm font-medium">{score.toFixed(1)} pts</span>
             </div>
-            <p className="text-xs text-gray-600 mt-1">
-              {percentage.toFixed(1)}% de compatibilidade
-            </p>
           </div>
         </div>
         <button
