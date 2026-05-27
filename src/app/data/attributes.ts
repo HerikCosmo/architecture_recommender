@@ -6,6 +6,12 @@ export interface QualityAttribute {
     relatedFeatures: string[];
 }
 
+export interface QualityAttributesConflict {
+  attr1Id: string;
+  attr2Id: string;
+  description: string;
+}
+
 export const priorityLevels = [
     { label: "Won't Have", value: 0, color: 'bg-gray-300', description: 'Não é necessário' },
     { label: "Could Have", value: 1, color: 'bg-blue-400', description: 'Desejável' },

@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { AttributeCard } from "../components/AttributeCard";
-import { priorityLevels, type QualityAttribute } from "../data/attributes";
+import { priorityLevels, type QualityAttributesConflict, type QualityAttribute } from "../data/attributes";
 import { type ArchitecturePattern } from "../data/architectures";
 import { Calculator, Target } from "lucide-react";
 import { ArchictectureResult } from "../components/ArchitectureResult";
-import { getArchitecturePatterns, getAttributes } from "../services/api";
+import { getArchitecturePatterns, getAttributes, getAttributesConflict } from "../services/api";
 import { Loading } from "../components/Loading";
+import { CardConflict } from "../components/CardConflict";
 
 export function MainPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [attributes, setAttributes] = useState<QualityAttribute[]>([]);
   const [patterns, setPatterns] = useState<ArchitecturePattern[]>([]);
+  const [attributesConflict, setAttributesConflict] = useState<QualityAttributesConflict[]>([]);
 
   const [priorities, setPriorities] = useState<Record<string, number>>({});
 
@@ -19,13 +21,19 @@ export function MainPage() {
   useEffect(() => {
     const fetchAllData = async() => {
       try {
-        const [fetchPatterns, fetchAttributes] = await Promise.all([
+        const [
+          fetchPatterns,
+          fetchAttributes,
+          fetchAttributesConflict
+        ] = await Promise.all([
           getArchitecturePatterns(),
-          getAttributes()
+          getAttributes(),
+          getAttributesConflict()
         ]);
 
         setPatterns(fetchPatterns);
         setAttributes(fetchAttributes);
+        setAttributesConflict(fetchAttributesConflict);
 
         const initialPriorities = Object.fromEntries(
           fetchAttributes.map(attr => [attr.id, 0])
@@ -43,6 +51,18 @@ export function MainPage() {
   }, []);
 
   const hasSelectedPriorities = Object.values(priorities).some(p => p > 0);
+
+  const activeConflicts = attributesConflict.filter(conflict => {
+    const nota1 = priorities[conflict.attr1Id] || 0;
+    const nota2 = priorities[conflict.attr2Id] || 0;
+
+    return nota1 >= 3 && nota2 >= 3;
+  });
+
+  const attributeNames = attributes.reduce((acc, attr) => {
+    acc[attr.id] = attr.name;
+    return acc;
+  }, {} as Record<string, string>);
 
   const calculateScores = () => {
     return patterns
@@ -126,6 +146,8 @@ export function MainPage() {
             ))}
           </div>
         </div>
+
+        <CardConflict activeConflicts={activeConflicts} attributeNames={attributeNames} />
 
         <div className="text-center">
           <button
