@@ -7,7 +7,7 @@ export function Navigation() {
   const links = [
       { to: '/', label: 'Seleção', icon: Home },
       { to: '/attributes', label: 'Atributos', icon: BookOpen },
-      { to: '/patterns', label: 'Padrões de Arquitetura', icon: Boxes },
+      { to: '/patterns', label: 'Estilos Arquiteturais', icon: Boxes },
   ]
 
   return (

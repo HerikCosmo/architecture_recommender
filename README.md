@@ -1,6 +1,6 @@
 # Architecture Recommender
 
-O Architecture Recommender é uma aplicação web que permite analisar e conferir padrões de arquiteturas de software. O sistema avalia o grau de inferência que os padrões têm com diversos atributos de qualidade de software.
+O Architecture Recommender é uma aplicação web que permite analisar e conferir estilos  de arquiteturas de software. O sistema avalia o grau de inferência que os estilos têm com diversos atributos de qualidade de software.
 
 ---
 
@@ -10,7 +10,7 @@ O sistema é dividido em 3 seções:
 
 - **Página Principal (`/`)**: Ferramenta central de recomendação.
 - **Atributos (`/attributes`)**: Exploração detalhada dos atributos de qualidade de software.
-- **Padrões (`/patterns`)**: Catálogo dos padrões arquiteturais, apresentando a sua descrição, prós, contras e exemplos.
+- **Estilos (`/patterns`)**: Catálogo dos estilos arquiteturais, apresentando a sua descrição, prós, contras e exemplos.
 
 ## 🛠️ Tecnologias Utilizadas
 

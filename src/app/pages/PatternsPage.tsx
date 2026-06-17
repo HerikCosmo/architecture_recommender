@@ -15,7 +15,7 @@ export function PatternsPage() {
         const data = await getArchitecturePatterns();
         setPatterns(data);
       } catch(err) {
-        console.error("Erro ao buscar padrões de arquitetura: ", err);
+        console.error("Erro ao buscar estilos de arquitetura: ", err);
       } finally {
         setIsLoading(false);
       }
@@ -33,10 +33,10 @@ export function PatternsPage() {
       <div className="text-center mb-8">
         <div className="flex items-center justify-center gap-3 mb-3">
           <Boxes className="text-blue-600" size={40} />
-          <h1 className="text-3xl font-bold text-gray-800">Padrões Arquiteturais</h1>
+          <h1 className="text-3xl font-bold text-gray-800">Estilos Arquiteturais</h1>
         </div>
         <p className="text-gray-600 max-w 2xl mx-auto">
-          Explore os diferentes padrões arquiteturais disponíveis para seu projeto
+          Explore os diferentes estilos arquiteturais disponíveis para seu projeto
         </p>
       </div>
 
